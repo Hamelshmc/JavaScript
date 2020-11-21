@@ -14,7 +14,7 @@ function bomba() {
     console.log('intentalo de nuevo');
     intento++;
     if (intento === 5) {
-      console.log('BOOM!');
+      return console.log('BOOM!');
     }
     if (+pass === Math.floor(Math.random() * 10)) {
       console.log('has desactivado la bomba!');
@@ -24,3 +24,26 @@ function bomba() {
 }
 
 bomba();
+
+// Solución Profe
+
+function bomb(numeroIntentos) {
+  const password = Math.round(Math.random() * 10);
+
+  for (let index = 0; index < numeroIntentos; index++) {
+    const guess = +prompt('Mete un codigo');
+    if (guess === password) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function playBomb(numeroIntentos) {
+  if (bomb(numeroIntentos)) {
+    console.log('desactivada');
+  }
+  console.log('BOOM!');
+}
+
+playBomb(5);

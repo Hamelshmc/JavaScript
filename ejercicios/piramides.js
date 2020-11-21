@@ -151,7 +151,6 @@ console.log(tamanoPiramide2(5));
 console.log(tamanoPiramide3(5));
 console.log(tamanoPiramide4(5));
 
-
 // Solución profe!
 
 // Piramide 0

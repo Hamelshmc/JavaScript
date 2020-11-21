@@ -24,4 +24,6 @@
 //   }
 //   return resultado;
 // }
-// console.log(past(0, 1, 1));
+// console.log(past(0, 1, 1))
+
+// users
