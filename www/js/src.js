@@ -39,42 +39,77 @@
   la diferencia es que el que estaba inicialmente infectado al dia siguiente esta sano
   */
 
-const patients = [true, false, true, false, false, false, true, true];
-const infected = [true, true, true, true, false, true, true, true];
+// const patients = [true, false, true, false, false, false, true, true];
+// const infected = [true, true, true, true, false, true, true, true];
 
-const infected2 = [false, true, false, true, false, true, false, false];
+// const infected2 = [false, true, false, true, false, true, false, false];
 
-function comprobarSiHayElemento(arr, index, contagiado) {
-  if (arr[index] !== undefined) {
-    arr[index] = contagiado;
-  }
-}
+// function comprobarSiHayElemento(arr, index, contagiado) {
+//   if (arr[index] !== undefined) {
+//     arr[index] = contagiado;
+//   }
+// }
 
-function consultaMedica(arr) {
-  let resultado = [...arr];
-  for (let index = 0; index < arr.length; index++) {
-    if (arr[index]) {
-      resultado[index] = true;
-      comprobarSiHayElemento(resultado, index - 1, true);
-      comprobarSiHayElemento(resultado, index + 1, true);
+// function consultaMedica(arr) {
+//   let resultado = [...arr];
+//   for (let index = 0; index < arr.length; index++) {
+//     if (arr[index]) {
+//       resultado[index] = true;
+//       comprobarSiHayElemento(resultado, index - 1, true);
+//       comprobarSiHayElemento(resultado, index + 1, true);
+//     }
+//   }
+//   return resultado;
+// }
+
+// function consultaMedica2(arr) {
+//   let resultado = [...arr];
+//   for (let index = 0; index < arr.length; index++) {
+//     if (arr[index]) {
+//       resultado[index] = false;
+//     } else if (arr[index] === arr[index + 1] && arr[index] === arr[index - 1]) {
+//       resultado[index] = false;
+//     } else {
+//       resultado[index] = true;
+//     }
+//   }
+//   return resultado;
+// }
+// console.log(patients);
+// console.log(consultaMedica(patients));
+// console.log(consultaMedica2(patients));
+
+// function fibonacci(n) {
+//   if (n === 0 || n === 1) {
+//     return 1;
+//   }
+//   return fibonacci(n - 1) + fibonacci(n - 2);
+// }
+
+// function fibonacci2(n) {
+//   let resultado;
+//   for (let index = 1; index < n; index++) {
+//     if (n === 0 || n === 1) {
+//       return 1;
+//     } else {
+//       resultado = index + 1 - index + 2;
+//     }
+//   }
+//   return resultado;
+// }
+
+// console.log(fibonacci(8));
+// console.log(fibonacci2(8));
+
+function matrix(num) {
+  let resultado = [];
+  for (let a = 0; a < num; a++) {
+    resultado.push([]);
+    for (let b = 0; b < num; b++) {
+      resultado[a][b] = '*';
     }
   }
   return resultado;
 }
 
-function consultaMedica2(arr) {
-  let resultado = [...arr];
-  for (let index = 0; index < arr.length; index++) {
-    if (arr[index]) {
-      resultado[index] = false;
-    } else if (arr[index] === arr[index + 1] && arr[index] === arr[index - 1]) {
-       resultado[index] = false;
-    } else {
-      resultado[index] = true;
-    }
-  }
-  return resultado;
-}
-console.log(patients);
-console.log(consultaMedica(patients));
-console.log(consultaMedica2(patients));
+console.log(matrix(3));

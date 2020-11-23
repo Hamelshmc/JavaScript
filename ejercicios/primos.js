@@ -35,3 +35,8 @@ function primosHastaElX(x) {
 }
 
 primosHastaElX(100);
+
+
+
+
+
