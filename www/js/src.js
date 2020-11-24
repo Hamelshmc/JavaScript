@@ -139,12 +139,45 @@ console.log(matrix(4));
 
 console.log(matrixPersonalizada(5, '💻', '🧯'));
 
-function ordenarNumeros(array) {
-  for (let a = 0; a < array.length; a++) {
-    for (let b = 0; b < array.length; b++) {
-      if (array[a] > array[b]) {
-        let variable = array[a];
-        array[a] = array[b];
+/**
+ * Procedure OrdenarBurbuja;
+Begin
+ clrscr;
+ For i:=1 to va_n - 1 do Recorre el vector
+ Begin
+ For j:=1 to va_n - 1 do Recorre el vector ordenando
+ Begin
+ If ( vv_vector[j] > vv_vector[j+1] ) Then  Pregunta para ordenar de
+menor a mayor
+ Begin
+ va_aux:=vv_vector[j];
+ vv_vector[j]:=vv_vector[j+1];
+ vv_vector[j+1]:=va_aux;
+ End;
+ End;
+ En
+ */
+
+function ordenarBurbujaAsc(array) {
+  for (let i = 0; i < array.length; i++) {
+    for (let n = 0; n < array.length; n++) {
+      if (array[n] > array[n + 1]) {
+        let variableTemporal = array[n];
+        array[n] = array[n + 1];
+        array[n + 1] = variableTemporal;
+      }
+    }
+  }
+  return array;
+}
+
+function ordenarBurbujaDesc(array) {
+  for (let i = 0; i < array.length; i++) {
+    for (let n = 0; n < array.length; n++) {
+      if (array[n] < array[n + 1]) {
+        let variableTemporal = array[n];
+        array[n] = array[n + 1];
+        array[n + 1] = variableTemporal;
       }
     }
   }
@@ -154,4 +187,5 @@ function ordenarNumeros(array) {
 const desordenado = [6, 7, 2, 8, 1];
 const ordenado = [1, 2, 6, 7, 8];
 
-console.log(ordenarNumeros(desordenado));
+console.log(ordenarBurbujaAsc(desordenado));
+console.log(ordenarBurbujaDesc(desordenado));
