@@ -124,16 +124,34 @@ function pintarDiagonales(arr, simbolo) {
 
 function matrixPersonalizada(num, simboloRelleno, simboloDiagonal) {
   let resultado = [];
-  for (let a = 0; a < num; a++) {
+  for (let fila = 0; fila < num; fila++) {
     resultado.push([]);
-    for (let b = 0; b < num; b++) {
-      resultado[a][b] = simboloRelleno;
+    for (let columna = 0; columna < num; columna++) {
+      resultado[fila][columna] = simboloRelleno;
+      resultado[fila][fila] = simboloDiagonal;
+      resultado[fila][num - (fila + 1)] = simboloDiagonal;
     }
   }
-  pintarDiagonales(resultado, simboloDiagonal);
   return resultado;
 }
 
 console.log(matrix(4));
 
 console.log(matrixPersonalizada(5, '💻', '🧯'));
+
+function ordenarNumeros(array) {
+  for (let a = 0; a < array.length; a++) {
+    for (let b = 0; b < array.length; b++) {
+      if (array[a] > array[b]) {
+        let variable = array[a];
+        array[a] = array[b];
+      }
+    }
+  }
+  return array;
+}
+
+const desordenado = [6, 7, 2, 8, 1];
+const ordenado = [1, 2, 6, 7, 8];
+
+console.log(ordenarNumeros(desordenado));
