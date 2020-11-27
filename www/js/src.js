@@ -321,7 +321,9 @@ console.log(
 
 console.log(
   'País con más infectados (del array de países)',
-  countries.filter((country) => country.infected === Math.max(...countries.map((country) => country.infected)))
+  countries.filter(
+    (country) => country.infected === Math.max(...countries.map((country) => country.infected))
+  )
 );
 
 // Número de total de infectados del array de personas
@@ -382,20 +384,64 @@ console.log(
 // A partir de las personas sacar el animal que tienen más personas como mascota
 console.log(
   'A partir de las personas sacar el animal que tienen más personas como mascota',
-  persons.map((person) => {
-    let personCopy = { ...person };
-    const pet = pets.find((pet) => pet.name === personCopy.pet);
-    personCopy.petData = pet;
-    return personCopy;
-  })
+  persons
+    .map((person) => {
+      let personCopy = { ...person };
+      const pet = pets.find((pet) => pet.name === personCopy.pet);
+      personCopy.petData = pet;
+      return personCopy;
+    })
+    .map((value) => value.petData.animal)
 );
 
 // Número total de patas de las mascotas de las personas
-
+console.log(
+  'Número total de patas de las mascotas de las personas',
+  persons
+    .map((person) => {
+      let personCopy = { ...person };
+      const pet = pets.find((pet) => pet.name === personCopy.pet);
+      personCopy.petData = pet;
+      const animal = animals.find((animal) => personCopy.petData.animal === animal.name);
+      personCopy.petData.animalData = animal;
+      return personCopy;
+    })
+    .reduce((acumulador, persona) => {
+      return acumulador + persona.petData.animalData.legs;
+    }, 0)
+);
 // Array con las personas que tienen animales de 4 patas
-
+console.log(
+  'Array con las personas que tienen animales de 4 patas',
+  persons
+    .map((person) => {
+      let personCopy = { ...person };
+      const pet = pets.find((pet) => pet.name === personCopy.pet);
+      personCopy.petData = pet;
+      const animal = animals.find((animal) => personCopy.petData.animal === animal.name);
+      personCopy.petData.animalData = animal;
+      return personCopy;
+    })
+    .filter((persona) => persona.petData.animalData.legs === 4)
+);
 // A partir del string 'España' obtener un array de personas no infectadas de ese país
 
 // Array de paises que tienen personas con loros como mascota
-
+console.log(
+  'Array de paises que tienen personas con loros como mascota',
+  countries
+    .map((country) => {
+      let countryCopy = { ...country };
+      const person = persons.find((person) => countryCopy.code === person.country);
+      countryCopy.personData = person;
+      if (countryCopy.personData !== undefined) {
+      const pet = pets.find((pet) => pet.name === countryCopy.personData.pet);
+      countryCopy.personData.petData = pet;
+      }
+      return countryCopy;
+    }).filter(country => {
+      if (country.personData !== undefined)
+      { return country.personData.petData.animal === 'loro' }
+    })
+);
 // Numero de infectados totales (los del objeto del país) de los paises con mascotas de ocho patas
