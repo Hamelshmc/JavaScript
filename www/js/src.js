@@ -391,7 +391,20 @@ console.log(
       personCopy.petData = pet;
       return personCopy;
     })
-    .map((value) => value.petData.animal)
+    .reduce((accumulador, person) => {
+      const foundAnimal = accumulador.find((stat) => {
+        return person.petData.animal === stat.animal;
+      });
+      if (foundAnimal) {
+        foundAnimal.amount++;
+      } else {
+        accumulador.push({ animal: person.petData.animal, amount: 1 });
+      }
+      return accumulador;
+    }, [])
+    .reduce((masRepetido, animalStats) => {
+      return masRepetido.amount > animalStats.amount ? masRepetido : animalStats;
+    })
 );
 
 // Número total de patas de las mascotas de las personas
@@ -429,19 +442,15 @@ console.log(
 // Array de paises que tienen personas con loros como mascota
 console.log(
   'Array de paises que tienen personas con loros como mascota',
-  countries
-    .map((country) => {
-      let countryCopy = { ...country };
-      const person = persons.find((person) => countryCopy.code === person.country);
-      countryCopy.personData = person;
-      if (countryCopy.personData !== undefined) {
-      const pet = pets.find((pet) => pet.name === countryCopy.personData.pet);
-      countryCopy.personData.petData = pet;
-      }
-      return countryCopy;
-    }).filter(country => {
-      if (country.personData !== undefined)
-      { return country.personData.petData.animal === 'loro' }
+    persons
+    .map((person) => {
+      let personCopy = { ...person };
+      const pet = pets.find((pet) => pet.name === personCopy.pet);
+      personCopy.petData = pet;
+      return personCopy;
+    }).filter((person) => person.petData.animal === 'loro').map((person) => {
+      return countries.find((country) => country.code === person.country);
     })
 );
+
 // Numero de infectados totales (los del objeto del país) de los paises con mascotas de ocho patas
