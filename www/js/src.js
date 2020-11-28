@@ -438,6 +438,12 @@ console.log(
     .filter((persona) => persona.petData.animalData.legs === 4)
 );
 // A partir del string 'España' obtener un array de personas no infectadas de ese país
+console.log(
+  'A partir del string España obtener un array de personas no infectadas de ese país',
+  countries.filter(country => country.name === 'España').reduce((acumulador, pais) => {
+    return[...acumulador,...persons.filter(person => person.country === pais.code)]
+  },[]).filter(person => !person.infected)
+);
 
 // Array de paises que tienen personas con loros como mascota
 console.log(
@@ -454,3 +460,19 @@ console.log(
 );
 
 // Numero de infectados totales (los del objeto del país) de los paises con mascotas de ocho patas
+
+console.log(
+  'Numero de infectados totales (los del objeto del país) de los paises con mascotas de ocho patas',
+  persons
+    .map((person) => {
+      let personCopy = { ...person };
+      const pet = pets.find((pet) => pet.name === personCopy.pet);
+      personCopy.petData = pet;
+      const animal = animals.find((animal) => personCopy.petData.animal === animal.name);
+      personCopy.petData.animalData = animal;
+      return personCopy;
+    })
+    .filter((persona) => persona.petData.animalData.legs === 8).map((persona) => {
+      return countries.find((country) => country.code === persona.country)
+    }).map((country) => country.infected)
+);
