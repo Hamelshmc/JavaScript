@@ -1,3 +1,4 @@
+'use strict';
 /*
   Quiero hacer una funcion que admita de parametro un numero
   El numero va a representar el alto y ancho de un array bidimensional

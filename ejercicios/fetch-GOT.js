@@ -1,3 +1,4 @@
+'use strict';
 /*
 Recuperar los datos de la casa Targaryen de juego de la API de Game of Thrones, de esta casa deberemos averiguar cual es el Lord actual (almacenado en currentLord) y recuperar sus datos, los del lord.
 

@@ -1,3 +1,4 @@
+'use strict';
 /*
   Quiero hacer una funcion que admita de parametro un array de pacientes
   La funcion devuelve los que estan infectados al dia siguiente
