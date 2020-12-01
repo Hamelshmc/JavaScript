@@ -142,337 +142,109 @@
 // console.log(ordenarBurbuja(desordenado));
 // console.log(ordenarSeleccion(desordenado));
 
-const persons = [
-  {
-    name: 'Pedro',
-    age: 35,
-    country: 'ES',
-    infected: true,
-    pet: 'Troski',
-  },
-  {
-    name: 'Elisabeth',
-    age: 14,
-    country: 'UK',
-    infected: true,
-    pet: 'Firulais',
-  },
-  {
-    name: 'Pablo',
-    age: 25,
-    country: 'ES',
-    infected: false,
-    pet: 'Berritxu',
-  },
-  {
-    name: 'Angela',
-    age: 18,
-    country: 'DE',
-    infected: false,
-    pet: 'Noodle',
-  },
-  {
-    name: 'Boris',
-    age: 50,
-    country: 'UK',
-    infected: true,
-    pet: 'Leon',
-  },
-  {
-    name: 'Donald',
-    age: 69,
-    country: 'US',
-    infected: false,
-    pet: 'Pence',
-  },
-];
+/*
+  Vamos a crear un ecommerce
 
-const pets = [
-  {
-    name: 'Troski',
-    animal: 'perro',
-  },
-  {
-    name: 'Firulais',
-    animal: 'perro',
-  },
-  {
-    name: 'Berritxu',
-    animal: 'loro',
-  },
-  {
-    name: 'Noodle',
-    animal: 'araña',
-  },
-  {
-    name: 'Leon',
-    animal: 'gato',
-  },
-  {
-    name: 'Pence',
-    animal: 'perro',
-  },
-];
+  Por un lado tenemos los usuarios, que van a estar representados por una clase
+  Solo voy a necesitar una instancia de un usuario.
+  El usuario tiene un carrito que es privado, el carrito es un array.
+  En el array el usuario va metiendo items
+  El usuario va a tener un metodo de añadir al carrito, porque no puedo modificarlo desde fuera,
+  añadir al carrito recibe un item como parametro.
+  Tambien tiene un metodo pagar que devuelve el carrito para poder pasarlo a la tienda y que emita la
+  factura
 
-const animals = [
-  {
-    name: 'perro',
-    legs: 4,
-  },
-  {
-    name: 'araña',
-    legs: 8,
-  },
-  {
-    name: 'gato',
-    legs: 4,
-  },
-  {
-    name: 'loro',
-    legs: 2,
-  },
-  {
-    name: 'gallina',
-    legs: 2,
-  },
-];
+  Voy a tener una clase Item. Los items los voy a generar a partir de los datos de abajo.
 
-// Población en millones
-const countries = [
-  {
-    code: 'CN',
-    name: 'China',
-    population: 1439,
-    infected: 81999,
-  },
-  {
-    code: 'US',
-    name: 'Estados Unidos',
-    population: 331,
-    infected: 112468,
-  },
-  {
-    code: 'DE',
-    name: 'Alemania',
-    population: 83,
-    infected: 56202,
-  },
-  {
-    code: 'ES',
-    name: 'España',
-    population: 46,
-    infected: 72248,
-  },
-  {
-    code: 'UK',
-    name: 'Reino Unido',
-    population: 67,
-    infected: 17301,
-  },
-];
+  Voy a tener una tienda representada con su clase.
+  Va a tener un metodo comprar, que recibe el carrito de usuario
+  El metodo de comprar saca por la consola la factura
+  cada linea de la factura tiene el nombre del articulo, las unidades, el precio por unidad y el
+  precio de las unidades de esa linea.
+  La ultima linea saca el total de todo el carrito
+*/
 
-// A partir de las personas sacar el animal que tienen más personas como mascota
-const personsWithAnimal = persons.map((person) => {
-  let personCopy = { ...person };
-  const pet = pets.find((pet) => pet.name === personCopy.pet);
-  personCopy.petData = pet;
-  const animal = animals.find((animal) => personCopy.petData.animal === animal.name);
-  personCopy.petData.animalData = animal;
-  return personCopy;
-});
+const itemNames = ['Camisa', 'Camisa', 'Pantalon', 'Calcetines'];
+const itemPrices = [13, 13, 27, 100];
 
-const totalLegs = personsWithAnimal.reduce((acumulador, persona) => {
-  return acumulador + persona.petData.animalData.legs;
-}, 0);
+class Usuario {
+  #cart = [];
 
-console.log(personsWithAnimal);
-console.log(totalLegs);
-/**
- * EJERCICIOS
- */
+  addCart(item) {
+    this.#cart.push(item);
+  }
 
-// Número total de infectados
+  pay() {
+    return this.#cart;
+  }
+}
 
-console.log(
-  'Número total de infectados',
-  persons.reduce((acumulador, person) => {
-    return acumulador + person.infected;
-  }, 0)
-);
+class Item {
+  constructor(name, price) {
+    this.name = name;
+    this.price = price;
+  }
 
-// Número total de sanos
-console.log(
-  ' Número total de sanos',
-  persons.reduce((acumulador, person) => {
-    return acumulador + !person.infected;
-  }, 0)
-);
+  static article(itemNames, itemPrices) {
+    const items = itemNames.map((name, index) => {
+      return new Item(name, itemPrices[index]);
+    });
+    // .reduce((accumulador, item) => {
+    //   const product = accumulador.find((data) => {
+    //     return item.name === data.name;
+    //   });
+    //   if (product) {
+    //     product.amount++;
+    //     product.price += product.price;
+    //   } else {
+    //     accumulador.push({
+    //       name: item.name,
+    //       unitPrice: item.price,
+    //       price: item.price,
+    //       amount: 1,
+    //     });
+    //   }
+    //   return accumulador;
+    // }, []);
+    return items;
+  }
+}
 
-// Numero total de infectados en los países (del array de países)
+class ItemCarrito {
+  item;
+  amount;
+  totalPrice;
 
-console.log(
-  'Numero total de infectados en los países (del array de países)',
-  countries.reduce((acumulador, country) => {
-    return acumulador + country.infected;
-  }, 0)
-);
+  constructor(item) {
+    this.item = item;
+  }
 
-// País con más infectados (del array de países)
+  seRepite(item) {
+    let foundItem = item.find((data) => {
+      return this.item.name === data.name;
+    });
+    if (foundItem) {
+      this.amount++
+      this.totalPrice += this.item.price
+    } 
 
-console.log(
-  'País con más infectados (del array de países)',
-  countries.filter(
-    (country) => country.infected === Math.max(...countries.map((country) => country.infected))
-  )
-);
+  }
+}
 
-// Número de total de infectados del array de personas
-console.log(
-  'Número de total de infectados del array de personas',
-  persons.reduce((acumulador, person) => {
-    return acumulador + person.infected;
-  }, 0)
-);
+class Tienda {
+  static comprar(carrito) {
+    console.log(carrito);
+  }
+}
 
-// Array con nombre de todas las mascotas
+const myItems = Item.article(itemNames, itemPrices);
+const myUsuario = new Usuario();
 
-console.log(
-  'Array con nombre de todas las mascotas',
-  pets.map((pet) => pet.name)
-);
+myUsuario.addCart(myItems[0]);
+myUsuario.addCart(myItems[0]);
+myUsuario.addCart(myItems[1]);
+myUsuario.addCart(myItems[0]);
+myUsuario.addCart(myItems[0]);
+myUsuario.addCart(myItems[2]);
 
-// Array con las personas infectadas del array de personas
-console.log(
-  ' Array con las personas infectadas del array de personas',
-  persons.filter((person) => person.infected)
-);
-
-// Array de españoles con perro
-console.log(
-  'Array de españoles con perro',
-  persons
-    .map((person) => {
-      let personCopy = { ...person };
-      const pet = pets.find((pet) => pet.name === personCopy.pet);
-      personCopy.petData = pet;
-      return personCopy;
-    })
-    .filter((person) => person.country === 'ES' && person.petData.animal === 'perro')
-);
-
-// Número de personas infectadas del array de personas
-console.log(
-  'Número de personas infectadas del array de personas',
-  persons.reduce((acumulador, person) => {
-    return person.infected ? acumulador + 1 : acumulador;
-  }, 0)
-);
-
-// Array con las personas y el objeto de la persona tiene a mayores todos los datos de su mascota
-console.log(
-  'Array con las personas y el objeto de la persona tiene a mayores todos los datos de su mascota',
-  persons.map((person) => {
-    let personCopy = { ...person };
-    const pet = pets.find((pet) => pet.name === personCopy.pet);
-    personCopy.petData = pet;
-    const animal = animals.find((animal) => personCopy.petData.animal === animal.name);
-    personCopy.petData.animalData = animal;
-    return personCopy;
-  })
-);
-
-// A partir de las personas sacar el animal que tienen más personas como mascota
-console.log(
-  'A partir de las personas sacar el animal que tienen más personas como mascota',
-  persons
-    .map((person) => {
-      let personCopy = { ...person };
-      const pet = pets.find((pet) => pet.name === personCopy.pet);
-      personCopy.petData = pet;
-      return personCopy;
-    })
-    .reduce((accumulador, person) => {
-      const foundAnimal = accumulador.find((stat) => {
-        return person.petData.animal === stat.animal;
-      });
-      if (foundAnimal) {
-        foundAnimal.amount++;
-      } else {
-        accumulador.push({ animal: person.petData.animal, amount: 1 });
-      }
-      return accumulador;
-    }, [])
-    .reduce((masRepetido, animalStats) => {
-      return masRepetido.amount > animalStats.amount ? masRepetido : animalStats;
-    })
-);
-
-// Número total de patas de las mascotas de las personas
-console.log(
-  'Número total de patas de las mascotas de las personas',
-  persons
-    .map((person) => {
-      let personCopy = { ...person };
-      const pet = pets.find((pet) => pet.name === personCopy.pet);
-      personCopy.petData = pet;
-      const animal = animals.find((animal) => personCopy.petData.animal === animal.name);
-      personCopy.petData.animalData = animal;
-      return personCopy;
-    })
-    .reduce((acumulador, persona) => {
-      return acumulador + persona.petData.animalData.legs;
-    }, 0)
-);
-// Array con las personas que tienen animales de 4 patas
-console.log(
-  'Array con las personas que tienen animales de 4 patas',
-  persons
-    .map((person) => {
-      let personCopy = { ...person };
-      const pet = pets.find((pet) => pet.name === personCopy.pet);
-      personCopy.petData = pet;
-      const animal = animals.find((animal) => personCopy.petData.animal === animal.name);
-      personCopy.petData.animalData = animal;
-      return personCopy;
-    })
-    .filter((persona) => persona.petData.animalData.legs === 4)
-);
-// A partir del string 'España' obtener un array de personas no infectadas de ese país
-console.log(
-  'A partir del string España obtener un array de personas no infectadas de ese país',
-  countries.filter(country => country.name === 'España').reduce((acumulador, pais) => {
-    return[...acumulador,...persons.filter(person => person.country === pais.code)]
-  },[]).filter(person => !person.infected)
-);
-
-// Array de paises que tienen personas con loros como mascota
-console.log(
-  'Array de paises que tienen personas con loros como mascota',
-    persons
-    .map((person) => {
-      let personCopy = { ...person };
-      const pet = pets.find((pet) => pet.name === personCopy.pet);
-      personCopy.petData = pet;
-      return personCopy;
-    }).filter((person) => person.petData.animal === 'loro').map((person) => {
-      return countries.find((country) => country.code === person.country);
-    })
-);
-
-// Numero de infectados totales (los del objeto del país) de los paises con mascotas de ocho patas
-
-console.log(
-  'Numero de infectados totales (los del objeto del país) de los paises con mascotas de ocho patas',
-  persons
-    .map((person) => {
-      let personCopy = { ...person };
-      const pet = pets.find((pet) => pet.name === personCopy.pet);
-      personCopy.petData = pet;
-      const animal = animals.find((animal) => personCopy.petData.animal === animal.name);
-      personCopy.petData.animalData = animal;
-      return personCopy;
-    })
-    .filter((persona) => persona.petData.animalData.legs === 8).map((persona) => {
-      return countries.find((country) => country.code === persona.country)
-    }).map((country) => country.infected)
-);
+const myTienda = Tienda.comprar(myUsuario.pay());

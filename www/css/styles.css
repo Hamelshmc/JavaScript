@@ -1,3 +1,6 @@
 .CONTAINER {
     margin: 0px
 }
+html {
+    padding: 0;
+}
