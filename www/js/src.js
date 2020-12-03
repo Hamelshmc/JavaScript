@@ -16,88 +16,88 @@
 // function hola(mensaje) {
 //    return mensaje;
 //  }
-const itemNames = ['Camisa', 'Pantalon', 'Calcetines'];
-const itemPrices = [13, 27, 100];
 
-class Usuario {
-  #cart = [];
+/*
+  Vamos a tener una clase que describe a los sospechosos.
+  Cada instancia almacena los datos fisicos de un sospechoso.
+  Cada sospechoso tiene un dato de la persona culpable
+  Nadie miente
+  El tip es privado, para que confiese necesitaremos un método
 
-  addCart(item) {
-    this.#cart.push(item);
-  }
+  Vamos a tener una clase detective
+  El detective va a tener un método para investigar
+  El metodo de investigar recibe un array de sospechosos
+  Y devuelve al único culpable que hay
+  OPCIONAL: Podeis ponerle datos personales si quereis pero no es obligatorio. Podeis implementar
+  una clase persona de la que heredan el detective y los sospechosos.
+*/
 
-  pay() {
-    return this.#cart;
-  }
-}
+// Con estos datos vais a tener que montar las instancias
+const names = ['Willy', 'Ivan', 'Ramiro'];
+const eyeColor = ['azul', 'marron', 'azul'];
+const height = ['bajo', 'alto', 'alto'];
+const tattooed = [true, false, false];
+const tip = [
+  {
+    height: 'alto',
+  },
+  {
+    eyeColor: 'marron',
+  },
+  {
+    tattooed: false,
+  },
+];
 
-class Item {
-  constructor(name, price) {
+class Suspects {
+  #tip;
+  constructor(name, eyeColor, height, tattooed, tip) {
     this.name = name;
-    this.price = price;
+    this.eyeColor = eyeColor;
+    this.height = height;
+    this.tattooed = tattooed;
+    this.#tip = tip;
   }
 
-  static article(itemNames, itemPrices) {
-    let items = itemNames.map((name, index) => {
-      return new Item(name, itemPrices[index]);
+  confiesa() {
+    return this.#tip;
+  }
+
+  static createSuspects(names, eyeColor, height, tattooed, tip) {
+    let newsSuspects = names.map((name, index) => {
+      return new Suspects(name, eyeColor[index], height[index], tattooed[index], tip[index]);
     });
-    return items;
+    return newsSuspects;
   }
 }
 
-class Tienda {
-  static comprar(carrito) {
-    let resultado = carrito.reduce((accumulator, item) => {
-      const product = accumulator.find((data) => {
-        return item.name === data.name;
-      });
-      if (product) {
-        product.amount++;
-        product.price += product.price;
-      } else {
-        accumulator.push({
-          name: item.name,
-          unitPrice: item.price,
-          price: item.price,
-          amount: 1,
-        });
+const resultado = {};
+
+class Detective {
+  static investigar(suspects) {
+    const valuesTip = this.getTipValue(suspects);
+
+    for (const iterator of suspects) {
+      console.log(iterator.name);
+      for (const key in iterator) {
+        if (iterator[key] === valuesTip[key]) {
+          console.log('coincide');
+        }
       }
-      return accumulator;
-    }, []);
-
-    let total = resultado.reduce((accumulator, item) => {
-      return accumulator + item.price;
-    }, 0);
-
-    for (const item of resultado) {
-      console.log(
-        `
-        nombre del articulo    ${item.name}
-        unidades               ${item.amount}
-        precio por unidad      ${item.unitPrice}€
-        precio de las unidades ${item.price}€
-       `
-      );
     }
-    console.log(
-      `
-        Total                  ${total}€
-       `
+  }
+
+  static getTipValue(suspects) {
+    const resultado = suspects.reduce(
+      (acumulador, item) => ({
+        ...acumulador,
+        ...item.confiesa(),
+      }),
+      {}
     );
+    return resultado;
   }
 }
 
-const myItems = Item.article(itemNames, itemPrices);
-const myUsuario = new Usuario();
-
-myUsuario.addCart(myItems[0]);
-myUsuario.addCart(myItems[0]);
-myUsuario.addCart(myItems[1]);
-myUsuario.addCart(myItems[0]);
-myUsuario.addCart(myItems[0]);
-myUsuario.addCart(myItems[2]);
-myUsuario.addCart(myItems[2]);
-myUsuario.addCart(myItems[1]);
-myUsuario.addCart(myItems[1]);
-
-const myTienda = Tienda.comprar(myUsuario.pay());
+const containerSuspects = Suspects.createSuspects(names, eyeColor, height, tattooed, tip);
+console.log(Detective.investigar(containerSuspects));
