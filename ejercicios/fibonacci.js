@@ -19,5 +19,14 @@ function fibonacci2(n) {
   return resultado;
 }
 
+function memofibonacci2(n) {
+  let memo = [0, 1];
+  for (let index = 2; index <= n; index++) {
+    memo[index] = memo[index - 2] + memo[index - 1];
+  }
+  return memo[n];
+}
+
+console.log(memofibonacci2(8));
 console.log(fibonacci(8));
 console.log(fibonacci2(8));
