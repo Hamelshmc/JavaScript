@@ -1,22 +1,4 @@
 'use strict';
-// // Esto es un comentario de una linea
-// /** Comentario en bloque  */
-
-// let cuandoEmpezoCovid19 = 2020;
-
-// console.log(cuandoEmpezoCovid19);
-
-// console.log('Hello World');
-// console.warn('Warning');
-// console.error('Error');
-
-// typeOf para consultar el tipo de variable
-// operador ternario
-// let frase = edad <= 18 ? 'Es mayor de edad' : 'Es menor de edad';
-// function hola(mensaje) {
-//    return mensaje;
-//  }
-
 /*
   Vamos a tener una clase que describe a los sospechosos.
   Cada instancia almacena los datos fisicos de un sospechoso.
@@ -32,6 +14,7 @@
   una clase persona de la que heredan el detective y los sospechosos.
 */
 
+// Con estos datos vais a tener que montar las instancias
 // Con estos datos vais a tener que montar las instancias
 const names = ['Willy', 'Ivan', 'Ramiro', 'Anuel'];
 const eyeColor = ['azul', 'marron', 'azul', 'marron'];
@@ -176,13 +159,9 @@ class DetectiveCIA extends Detective {
     return result;
   }
 }
-
 const mySuspects = Suspects.createSuspects(names, eyeColor, height, tattooed, tip);
 const FBI = new Detective('Hamilton', 'negro', 'alto', false, 'A Coruña');
 const CIA = new DetectiveCIA('Hamel', 'negro', 'alto', false, 'A Coruña');
-console.time('loop');
+
 console.log(FBI.investigar(mySuspects));
-console.timeEnd('loop');
-console.time('loop2');
 console.log(CIA.investigar(mySuspects));
-console.timeEnd('loop2');
