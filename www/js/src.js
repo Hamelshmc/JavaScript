@@ -137,7 +137,7 @@ class DetectiveCIA extends Detective {
         return clues.every((searchClues) => suspect.includes(searchClues));
       })
       .flat()
-      .filter((item) => this.indexed(suspects)[item])
+      .filter((item) => this.indexedName(suspects)[item])
       .join(' && ');
 
     return `Detective ${this.name.toUpperCase()}    - SOSPECHOSO ES --> ${foundSuspect.toUpperCase()}`;
@@ -165,11 +165,11 @@ class DetectiveCIA extends Detective {
     return result;
   }
 
-  indexed(suspects) {
+  indexedName(suspects) {
     const result = suspects.reduce(
-      (acc, el) => ({
-        ...acc,
-        [el.name]: el,
+      (accumulator, suspect) => ({
+        ...accumulator,
+        [suspect.name]: suspect,
       }),
       {}
     );
