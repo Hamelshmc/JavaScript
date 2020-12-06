@@ -1,22 +1,41 @@
-// H1 hora
-// h2 Buenos Días
-
 // DIGITAL HOUR
 'use strict';
 
-const time = new Date();
+const insertBackgroundGreet = (hour) => {
+  const h2 = document.querySelector('h2');
+  const body = document.querySelector('body');
 
-let hour = time.getHours();
-let minutes = time.getMinutes();
-let seconds = time.getSeconds();
+  if (hour < 13 && hour >= 6) {
+    body.setAttribute('class', 'morning');
+    h2.innerHTML = ` Good morning`;
+  } else if (hour >= 13 && hour < 20) {
+    body.setAttribute('class', 'afternoon');
+    h2.innerHTML = ` Good afternoon`;
+  } else {
+    body.setAttribute('class', 'night');
+    h2.innerHTML = ` Good night`;
+  }
+};
 
-const h1 = document.querySelector('h1');
-const h2 = document.querySelector('h2');
+const insertTime = () => {
+  const time = new Date();
 
-const insertTime = (hour, minutes, seconds) => {
-  return `${hour} ${minutes} ${seconds}`;
+  let hour = time.getHours();
+  let minutes = time.getMinutes();
+  let seconds = time.getSeconds();
+
+  const h1 = document.querySelector('h1');
+
+  hour = hour < 10 ? `0${hour}` : hour;
+  minutes = minutes < 10 ? `0${minutes}` : minutes;
+  seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+  h1.dataset.time = [hour, minutes, seconds];
+  h1.innerHTML = hour + ':' + minutes + ':' + seconds;
+
+  insertBackgroundGreet(hour);
 };
 
 setInterval(() => {
-  h1.innerHTML = insertTime(hour, minutes, seconds);
+  insertTime();
 }, 1000);
