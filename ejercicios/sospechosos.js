@@ -72,24 +72,23 @@ class Detective extends Person {
   }
 
   investigar(suspects) {
-    const valuesTip = this.getTipValue(suspects);
-    let numeroDeSospechas = Object.entries(valuesTip).length - 1;
-    let coincide = 0;
-    let encontrado = '';
-
-    for (const suspect of suspects) {
-      if (coincide <= numeroDeSospechas) {
-        for (const key in suspect) {
-          if (suspect.hasOwnProperty(key)) {
-            if (suspect[key] === valuesTip[key]) {
-              coincide++;
-            }
+    let cluesKeys = Object.keys(this.getTipValue(suspects));
+    let result = suspects
+      .filter((suspect) => {
+        for (let i = 0; i < cluesKeys.length; i++) {
+          if (
+            !suspect.hasOwnProperty(cluesKeys[i]) ||
+            suspect[cluesKeys[i]] !== this.getTipValue(suspects)[cluesKeys[i]]
+          ) {
+            return false;
           }
         }
-        encontrado = suspect.name;
-      }
-    }
-    return `Detective ${this.name.toUpperCase()} - SOSPECHOSO ES --> ${encontrado.toUpperCase()}`;
+        return true;
+      })
+      .map((suspect) => suspect.name)
+      .join(' && ');
+
+    return `Detective ${this.name.toUpperCase()} - SOSPECHOSO ES --> ${result.toUpperCase()}`;
   }
 
   getTipValue(suspects) {
@@ -112,7 +111,7 @@ class DetectiveCIA extends Detective {
   }
 
   investigar(suspects) {
-    const clues = this.getTipValue(suspects);
+    const clues = Object.values(this.getTipValue(suspects));
     const suspectsContainer = this.getSuspectsArray(suspects);
 
     const foundSuspect = suspectsContainer
@@ -131,19 +130,6 @@ class DetectiveCIA extends Detective {
       accumulator.push(Object.values(suspect));
       return accumulator;
     }, []);
-
-    return result;
-  }
-
-  getTipValue(suspects) {
-    const result = suspects
-      .reduce((accumulator, item) => {
-        if (item.confiesa()) {
-          accumulator.push(Object.values(item.confiesa()));
-        }
-        return accumulator;
-      }, [])
-      .flat();
 
     return result;
   }

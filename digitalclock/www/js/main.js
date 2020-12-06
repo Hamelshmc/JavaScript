@@ -31,7 +31,7 @@ const insertTime = () => {
   seconds = seconds < 10 ? `0${seconds}` : seconds;
 
   h1.dataset.time = [hour, minutes, seconds];
-  h1.innerHTML = hour + ':' + minutes + ':' + seconds;
+  h1.innerHTML = `${hour}:${minutes}:${seconds}`;
 
   insertBackgroundGreet(hour);
 };
