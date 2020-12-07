@@ -16,8 +16,3 @@
 // function hola(mensaje) {
 //    return mensaje;
 //  }
-
-function uniteUnique(arr) {
-  return (arr = [...new Set([...arguments].flat())]);
-}
-console.log(uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]));

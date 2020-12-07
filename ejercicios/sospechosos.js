@@ -72,14 +72,12 @@ class Detective extends Person {
   }
 
   investigar(suspects) {
-    let cluesKeys = Object.keys(this.getTipValue(suspects));
+    let cluesKeys = this.getTipValue(suspects);
+
     let result = suspects
       .filter((suspect) => {
-        for (let i = 0; i < cluesKeys.length; i++) {
-          if (
-            !suspect.hasOwnProperty(cluesKeys[i]) ||
-            suspect[cluesKeys[i]] !== this.getTipValue(suspects)[cluesKeys[i]]
-          ) {
+        for (const key in cluesKeys) {
+          if (!suspect.hasOwnProperty([key]) || suspect[key] !== cluesKeys[key]) {
             return false;
           }
         }
