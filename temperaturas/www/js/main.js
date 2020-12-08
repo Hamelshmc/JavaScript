@@ -31,22 +31,41 @@ const temperaturas = [
   },
 ];
 
-const tableTemperaturas = document.getElementById('temperaturas');
-const fila = document.createElement('tr');
-const columna = document.createElement('td');
-const columna2 = document.createElement('td');
-const columna3 = document.createElement('td');
-columna2.classList.add('low');
-columna3.classList.add('medium');
+//
+// columna3.classList.add('medium');
 
-tableTemperaturas.appendChild(fila);
-columna.textContent = `${temperaturas[0].city}`;
-columna2.textContent = `${temperaturas[0].min}`;
-columna3.textContent = `${temperaturas[0].max}`;
-fila.appendChild(columna);
-fila.appendChild(columna2);
-fila.appendChild(columna3);
+function buildTemperatureTable(temperatures) {
+  const section = document.querySelector('section');
+  const tableTemperatures = document.getElementById('temperaturas');
+  section.setAttribute('class', 'temp');
+  for (let i = 0; i < temperatures.length; i++) {
+    const row = document.createElement('tr');
+    const column = document.createElement('td');
+    const columnTwo = document.createElement('td');
+    const columnThree = document.createElement('td');
 
+    tableTemperatures.appendChild(row);
+    row.appendChild(column);
+    row.appendChild(columnTwo);
+    row.appendChild(columnThree);
 
+    column.textContent = `${temperatures[i].city}`;
+    columnTwo.textContent = `${temperatures[i].min}`;
+    columnThree.textContent = `${temperatures[i].max}`;
 
+    paintColumn(columnTwo, temperatures[i].min);
+    paintColumn(columnThree, temperatures[i].max);
+  }
+}
 
+function paintColumn(columna, temperature) {
+  if (temperature < 20) {
+    columna.setAttribute('class', 'low');
+  } else if (temperature >= 20 && temperature <= 30) {
+    columna.setAttribute('class', 'medium');
+  } else {
+    columna.setAttribute('class', 'high');
+  }
+}
+
+buildTemperatureTable(temperaturas);
