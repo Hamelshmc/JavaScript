@@ -1,18 +1,20 @@
 'use strict';
 
-// const apiUrl = `https://randomuser.me/api/?results=${numberOfUsers}`;
-const apiUrl2 = `https://randomuser.me/api/?results=1`;
+const numberOfUsers = 100;
+const apiUrl = `https://randomuser.me/api/?results=${numberOfUsers}`;
 
 const main = document.querySelector('main');
 
 async function getDataUsersRandoms(url) {
   const data = await (await fetch(url)).json();
-  console.log(data);
+  for (const iterator of data.results) {
+    template(iterator);
+  }
 }
 
-getDataUsersRandoms(apiUrl2);
+getDataUsersRandoms(apiUrl);
 
-function template({}) {
+function template(user) {
   const article = document.createElement('article');
   const header = document.createElement('header');
   const img = document.createElement('img');
@@ -25,7 +27,7 @@ function template({}) {
   header.appendChild(h1);
   article.appendChild(p);
 
-  img.setAttribute('src', u);
-  h1.textContent = 'hola h1';
-  p.textContent = 'hola p';
+  img.setAttribute('src', user.picture.large);
+  h1.textContent = `${user.name.first} ${user.name.last}`;
+  p.textContent = `${user.location.state} (${user.location.country}), ${user.dob.date.substr(0, 4)}`;
 }
