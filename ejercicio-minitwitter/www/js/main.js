@@ -3,8 +3,8 @@
 const button = document.querySelector('button');
 const listaTweets = document.getElementById('tweets');
 
-const recovereData = localStorage.getItem('tweets');
-let localStorageTweets = recovereData ? JSON.parse(recovereData) : [];
+const recoverData = localStorage.getItem('tweets');
+let localStorageTweets = recoverData ? JSON.parse(recoverData) : [];
 let generadorID = 0;
 
 initTweets(localStorageTweets);
